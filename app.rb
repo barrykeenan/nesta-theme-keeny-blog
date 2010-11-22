@@ -21,9 +21,12 @@ module Nesta
     end
   end
 
-  class Page
-    def self.nav_items
-      menu = Nesta::Config.content_path("navigation.txt")
+end
+
+class Page < FileModel
+  module ClassMethods
+    def menu_items
+      menu = Nesta::Config.content_path("menu.txt")
       pages = []
       if File.exist?(menu)
         File.open(menu).each { |line| pages << Page.load(line.chomp) }
@@ -31,12 +34,24 @@ module Nesta
       pages
     end
 
-    def hide_comments
-      @hide_comments = metadata("hide comments") || false;
-    end
-
-    def menu_title
-      @menu_title = metadata("menu title") || "";
+		def nav_items
+      top_nav = Nesta::Config.content_path("top_navigation.txt")
+      pages = []
+      if File.exist?(top_nav)
+        File.open(top_nav).each { |line| pages << Page.load(line.chomp) }
+      end
+      pages
     end
   end
+
+  extend ClassMethods
+
+	def hide_comments
+    @hide_comments = metadata("hide comments") || false;
+  end
+
+  def menu_title
+    @menu_title = metadata("menu title") || "";
+  end
+
 end
