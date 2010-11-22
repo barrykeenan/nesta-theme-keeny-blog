@@ -23,7 +23,7 @@
         %ul.nav.clearfix
           %li
             %a{ :href => "/" } Blog
-          - if ! @nav_items.empty?
+          - if @nav_items && !@nav_items.empty?
             - @nav_items.each do |page|
               %li
                 %a{ :href => page.abspath }= page.menu_title
