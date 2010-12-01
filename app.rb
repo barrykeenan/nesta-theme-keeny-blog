@@ -18,6 +18,17 @@ module Nesta
         set_from_config(:title, :subtitle, :google_analytics_code)
         @heading = @title
       end
+
+			def current_page?(page)
+				current_url? '/'+page.path
+			end
+			
+			def current_url?(url)
+				# LOGGER.info "CURRENT: #{request.path_info} URL: #{url}"
+				# TODO: If subpage then return "child"
+				(url == request.path_info)? "current" : ""
+			end
+			
     end
   end
 
